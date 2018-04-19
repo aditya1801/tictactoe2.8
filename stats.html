@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<title>stats</title>
+	<style type="text/css">
+			#playername{
+		
+		font-size:15pt;
+		border: 0;
+		margin-bottom: 0px;
+		height:35px;
+		text-align:center;
+	}
+	</style>
+</head>
+<body>
+	<h2><textarea id="playername" readonly ></textarea></h2>
+	<button id="backbutton" onclick="backbuttonfun()">back</button>
+	<table id="table" style="width:100%">
+		<tr>
+			
+			<td><strong>rating</strong></td>
+			<td><strong>wins</strong></td>
+			<td><strong>loses</strong></td>
+			<td><strong>draws</strong></td>
+			<td><strong>win streak</strong></td>
+			<td><strong>losing streak</strong></td>
+			<td><strong>draw streak</strong></td>
+		</tr>
+	</table>
+
+<script >
+	var username,name;
+	var $playername=$('#playername'); 
+	$(function(){
+		name = window.location.search.replace(/^\?/, '');
+		
+              
+              $playername.val(name);
+              var i;
+              $.get('http://localhost:2001/records', {}, function(data2){
+              
+              console.log(i+" "+data2[0]);
+              var tb=document.getElementById('table');
+              tb.innerHTML+="<tr><td>"+data2[0]['rating']+"</td><td>"+data2[0]['no_of_wins']+"</td><td>"+data2[0]['no_of_loses']+"</td><td>"+data2[0]['no_of_draws']+"</td><td>"+data2[0]['max_winning_streak']+"</td><td>"+data2[0]['max_losing_streak']+"</td><td>"+data2[0]['max_drawing_streak']+"</td></tr>";
+
+
+            });
+            });
+		
+	
+	function backbuttonfun()
+	{
+	  location.href="http://localhost:2001/index?"+name+"";
+	}
+</script>
+</body>
+</html>

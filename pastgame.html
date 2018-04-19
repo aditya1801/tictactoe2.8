@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<title>stats</title>
+	<style type="text/css">
+			#playername{
+		
+		font-size:15pt;
+		border: 0;
+		margin-bottom: 0px;
+		height:35px;
+		text-align:center;
+	}
+	</style>
+</head>
+<body>
+	<h2><textarea id="playername" readonly ></textarea></h2>
+	<button id="backbutton" onclick="backbuttonfun()">back</button>
+	<table id="table" style="width:100%">
+		<tr>
+			
+			<td><strong>you</strong></td>
+			<td><strong>opponent</strong></td>
+			<td><strong>status</strong></td>
+			<td><strong>date and time</strong></td>
+			
+		</tr>
+	</table>
+
+<script >
+	var username,name;
+	var $playername=$('#playername'); 
+	$(function(){
+		  
+         name = window.location.search.replace(/^\?/, '');
+
+		 console.log(name+" $$$4");
+		$.get('http://localhost:2001/records', {}, function(data2){
+              console.log(data2+" "+data2.length+"^^");
+              for(var i=0;i<data2.length;i++)
+              {
+              	var opponent;
+              	if(data2[i]['realusername']==data2[i]['username1'])
+              		opponent=data2[i]['username2'];
+              	else
+              		opponent=data2[i]['username1'];
+
+              var tb=document.getElementById('table');
+              tb.innerHTML+="<tr><td>"+data2[i]['realusername']+"</td><td>"+opponent+"</td><td>"+data2[i]['status']+"</td><td>"+data2[i]['time']+"</td></tr>";
+              }
+
+            });
+            
+		
+	});
+	function backbuttonfun()
+	{
+	  location.href="http://localhost:2001/index?"+name+"";
+	}
+</script>
+</body>
+</html>
